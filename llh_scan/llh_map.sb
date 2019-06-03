@@ -1,0 +1,31 @@
+#!/bin/bash
+#Run Time:
+#SBATCH -t 1440
+
+#Processors:
+#SBATCH -c 1
+
+#Memory:
+#SBATCH --mem= 1G
+
+#Output Directory for Log File
+#SBATCH -o /mnt/home/nguye639/reconstruction/50_GeV_5_job.log
+
+#Output Directory for Error File
+#SBATCH -e /mnt/home/nguye639/reconstruction/50_GeV_5_job.error
+
+#SBATCH --job-name=MCMC_Reconstruction
+
+
+source /mnt/home/neergarr/load_my_env.sh
+echo Job $SLURM_JOBNAME started on $HOSTNAME at $(date "+%Y.%m.%d %H:%M:%S %Z")
+
+python /mnt/home/nguye639/reconstruction/llh_scan/llh_map.py \
+ -g /mnt/home/neergarr/icecube/gcd_files/GeoCalibDetectorStatus_IC86.55697_corrected_V3.i3 \
+ -i /mnt/home/nguye639/reconstruction/llh_scan/typical_event_50gev_5.i3 \ 
+ -o /mnt/home/nguye639/reconstruction/llh_scan/llh_map_50_Gev_5.2.dat
+
+echo Job $SLURM_JOBNAME completed on $HOSTNAME at $(date "+%Y.%m.%d %H:%M:%S %Z")
+
+
+
